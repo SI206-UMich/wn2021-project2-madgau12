@@ -7,6 +7,7 @@ import unittest
 
 
 def get_titles_from_search_results(filename):
+
     """
     test
 
@@ -34,8 +35,18 @@ def get_search_links():
 
     """
 
-    pass
+    url = "https://www.goodreads.com/search?q=fantasy&qid=NwUsLiA2Nc"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'html.parser')
 
+    tags = soup.find_all('a', class_='bookTitle')
+    titles = []
+    for tag in tags:
+        info = tag.get('href')
+        titles.append('https://www.goodreads.com' + str(info))
+    
+    return titles[:10]
+    
 
 def get_book_summary(book_url):
     """
