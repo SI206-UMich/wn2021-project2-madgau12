@@ -41,7 +41,7 @@ def get_titles_from_search_results(filename):
     return l_of_tup
 
 
-get_titles_from_search_results("search_results.htm")
+#get_titles_from_search_results("search_results.htm")
 
 def get_search_links():
     """
@@ -69,6 +69,8 @@ def get_search_links():
     
     return titles[:10]
 
+#get_search_links()
+
 def get_book_summary(book_url):
     """
     Write a function that creates a BeautifulSoup object that extracts book
@@ -82,10 +84,24 @@ def get_book_summary(book_url):
     You can easily capture CSS selectors with your browser's inspector window.
     Make sure to strip() any newlines from the book title and number of pages.
     """
+    r = requests.get(book_url)
+    soup = BeautifulSoup(r.content, 'html.parser')
 
+    title = soup.find('h1', id='bookTitle')
+    t_info = title.text.strip()
+    #print(t_info)
 
+    author = soup.find('span', itemprop ='name')
+    a_info = author.text.strip()
+    #print(a_info)
 
-    
+    pages = soup.find('span', itemprop ='numberOfPages')
+    p_info = pages.text.strip()
+    #print(p_info)
+
+    return (t_info,a_info,p_info)
+
+#get_book_summary('https://www.goodreads.com/book/show/4667024-the-help') 
 
 
 def summarize_best_books(filepath):
