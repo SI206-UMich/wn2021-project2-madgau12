@@ -115,7 +115,21 @@ def summarize_best_books(filepath):
     ("Fiction", "The Testaments (The Handmaid's Tale, #2)", "https://www.goodreads.com/choiceawards/best-fiction-books-2020") 
     to your list of tuples.
     """
-    pass
+    with open(filepath) as fp:
+        soup = BeautifulSoup(fp, "html5lib")
+    #print(soup)
+
+    #categories = soup.findall('')
+    #titles = soup.findall('')
+    #titles = soup.findall('')
+    
+    #l_titles = []
+    #for t in titles:
+        #l_titles.append(t.text)
+    
+    #print(l_titles)
+
+#summarize_best_books('best_books_2020.htm')
 
 
 def write_csv(data, filename):
@@ -138,7 +152,19 @@ def write_csv(data, filename):
 
     This function should not return anything.
     """
-    pass
+     
+    fields = ['Book Title', 'Author Name']
+ 
+    with open(filename, 'w') as csvfile:  
+        csvwriter = csv.writer(csvfile) 
+        csvwriter.writerow(fields) 
+        csvwriter.writerows(list(data))
+
+    #fh = open(filename)
+    #f = fh.read()
+    #print(f)
+
+#write_csv([('HP','jk rowling'),('LOTR', 'tolken')],'books.csv')
 
 
 def extra_credit(filepath):
