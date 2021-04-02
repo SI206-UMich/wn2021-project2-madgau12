@@ -9,17 +9,39 @@ import unittest
 def get_titles_from_search_results(filename):
 
     """
-    test
-
     Write a function that creates a BeautifulSoup object on "search_results.htm". Parse
     through the object and return a list of tuples containing book titles (as printed on the Goodreads website) 
     and authors in the format given below. Make sure to strip() any newlines from the book titles and author names.
 
     [('Book title 1', 'Author 1'), ('Book title 2', 'Author 2')...]
     """
+    with open(filename) as fp:
+        soup = BeautifulSoup(fp, "html5lib")
+    #print(soup)
+    
+    tags_title = soup.find_all('a',class_='bookTitle') 
+    tags_author = soup.find_all('a',class_='authorName')
+    collect_titles = []
+    for tag in tags_title:
+        info = tag.text.strip()
+        collect_titles.append(info)
+    #print(collect_titles) 
 
-    pass
+    collect_authors = []
+    for tag in tags_author:
+        info = tag.text.strip()
+        collect_authors.append(info)
+    #print(collect_authors) 
 
+    l_of_tup =[]
+    for i in range(len(collect_titles)):
+        tup = (collect_titles[i],collect_authors[i])
+        l_of_tup.append(tup)
+    
+    return l_of_tup
+
+
+get_titles_from_search_results("search_results.htm")
 
 def get_search_links():
     """
@@ -46,7 +68,6 @@ def get_search_links():
         titles.append('https://www.goodreads.com' + str(info))
     
     return titles[:10]
-    
 
 def get_book_summary(book_url):
     """
@@ -62,7 +83,9 @@ def get_book_summary(book_url):
     Make sure to strip() any newlines from the book title and number of pages.
     """
 
-    pass
+
+
+    
 
 
 def summarize_best_books(filepath):
